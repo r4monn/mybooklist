@@ -1,6 +1,7 @@
 class Book {
-  constructor(title, author, isbn, addby) {
+  constructor(title, category, author, isbn, addby) {
     this.title = title;
+    this.category = category;
     this.author = author;
     this.isbn = isbn;
     this.addby = addby;
@@ -21,6 +22,7 @@ class UI {
 
     row.innerHTML = `
       <td>${book.title}</td>
+      <td>${book.category}</td>
       <td>${book.author}</td>
       <td>${book.isbn}</td>
       <td>${book.addby}</td>
@@ -50,6 +52,7 @@ class UI {
 
   static clearFields() {
     document.querySelector('#title').value = '';
+    document.querySelector('#category').value = '';
     document.querySelector('#author').value = '';
     document.querySelector('#isbn').value = '';
     document.querySelector('#addby').value = '';
@@ -98,16 +101,17 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
   
   // Get form values
   const title = document.querySelector('#title').value;
+  const category = document.querySelector('#category').value;
   const author = document.querySelector('#author').value;
   const isbn = document.querySelector('#isbn').value;
   const addby = document.querySelector('#addby').value;
 
   // Validate
-  if(title === '' || author === '' || isbn === '' || addby === '') {
+  if(title === '' || category === '' || author === '' || isbn === '' || addby === '') {
     UI.showAlert('Please fill in all fields', 'danger');
   } else {
     // Instantiate book
-    const book = new Book(title, author, isbn, addby);
+    const book = new Book(title, category, author, isbn, addby);
 
     // Add a Book to UI
     UI.addBookToList(book);
@@ -134,3 +138,21 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
   // Show success message
   UI.showAlert('Book Removed', 'success');
 });
+
+let allBooks = JSON.parse(localStorage.getItem('books'));
+
+let booksTerror = [];
+let booksRomance = [];
+for (let livro of allBooks) {
+  console.log(livro);
+
+  let categoryOfBook = livro.category;
+
+  if (categoryOfBook === 'Terror') {
+    booksTerror.push(livro)
+  } else if (categoryOfBook === 'Romance') {
+    booksRomance.push(livro)
+  }
+}
+console.log(`Total de livros de Terror: ${booksTerror.length}`)
+console.log(`Total de livros de Romance: ${booksRomance.length}`)
