@@ -5,4 +5,4 @@ It is also possible to remove books you have already read from the list.
 
 #### Update 15/07/2022
 - Add category of books
-- Books separated by ccategories
+- Books separated by categories
